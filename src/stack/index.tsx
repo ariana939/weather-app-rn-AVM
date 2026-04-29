@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 const StackPrincipal = () => {
     return ( 
         <>
-            <Stack />
+            <Stack screenOptions={{headerShown: false}} />
         </>
     );
 }
