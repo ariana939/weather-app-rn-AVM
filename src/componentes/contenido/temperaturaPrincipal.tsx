@@ -7,7 +7,7 @@ type TemperaturaPrincipalProps = {
 
 const TemperaturaPrincipal = ({ temp }: TemperaturaPrincipalProps) => {
   return (
-    <View className=" items-center mt-10">
+    <View className=" items-center mt-16">
       <Text testID="temp-current" className="text-6xl font-bold">{temp}°</Text>
     </View>
   );

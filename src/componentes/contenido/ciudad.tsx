@@ -7,8 +7,10 @@ type CiudadProps = {
 
 const Ciudad = ({ ciudad }: CiudadProps) => {
   return (
-    <View testID="ciudad" className="items-center mt-10">
-      <Text className="text-3xl">{ciudad}</Text>
+    <View className="items-center mt-10 py-10">
+      <Text testID="ciudad" className="text-4xl font-bold uppercase">
+        {ciudad}
+      </Text>
     </View>
   );
 };

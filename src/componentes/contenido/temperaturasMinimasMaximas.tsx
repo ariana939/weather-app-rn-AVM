@@ -10,7 +10,7 @@ const TemperaturasMinimaMaxima = ({ min, max }: TemperaturasMinMaxProps) => {
   return (
     <View
       testID="temp-minmax"
-      className="flex-row justify-center gap-10 mt-4"
+      className="flex-row justify-between gap-10 px-6 opacity-60"
     >
       <Text testID="temp-min" className="text-xl">
         {min}°

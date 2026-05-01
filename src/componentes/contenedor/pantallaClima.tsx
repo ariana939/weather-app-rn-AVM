@@ -7,31 +7,18 @@ import IconoGrandeClima from "../contenido/iconoGrandeClima";
 import TemperaturaPrincipal from "../contenido/temperaturaPrincipal";
 import TemperaturasMinMax from "../contenido/temperaturasMinimasMaximas";
 import Metrica from "../contenido/metricas";
+import { useWeather } from "@/src/hooks/hooks";
 
 const PantallaClima = () => {
 
-  const [ciudad] = useState("Buenos Aires");
-  const [temp] = useState(24);
-  const [min] = useState(22);
-  const [max] = useState(26);
-  const [condicion] = useState<"sunny" | "cloudy" | "rain">("sunny");
-  const [metricas] = useState({
-    humedad: 60,
-    presion: 1013,
-    viento: 12,
-  });
+  const {ciudad, temp, min, max, condicion, metricas} = useWeather();
 
   return (
-    <View testID="screen-weather" className="flex-1 items-center justify-center">
+    <View testID="screen-weather" className="flex-1 justify-between py-10">
       <NavEntreDias />
       <Ciudad ciudad={ciudad} />
       <IconoGrandeClima condicion={condicion} />
-
-      <Metrica
-        humedad={metricas.humedad}
-        presion={metricas.presion}
-        viento={metricas.viento}
-      />
+      <Metrica {...metricas}/>
       <TemperaturaPrincipal temp={temp} />
       <TemperaturasMinMax min={min} max={max} />
 
