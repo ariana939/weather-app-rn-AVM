@@ -1,22 +1,32 @@
+import { useState } from "react";
 import { Icon } from "@/components/ui/icon";    
 import { Text } from "@/components/ui/text";
 import { ChevronLeft, ChevronRight } from "lucide-react-native";
-import { View } from "react-native"
+import { View, TouchableOpacity } from "react-native"
+
+const dias = ["28/04", "29/04", "30/04"];
 
 const NavEntreDias = () => {
+  const [index, setIndex] = useState(1);
+
+  const prevDay = () => {
+    if (index > 0) setIndex(index - 1);
+  };
+
+  const nextDay = () => {
+    if (index < dias.length - 1) setIndex(index + 1);
+  };
   return (
     <View className="flex-row justify-between p-4">
-        <View className="flex-row items-center space-x-2">
-            <Icon as= {ChevronLeft}/>
-            <Text>28/04</Text>
-        </View>
-        <View>
-            <Text className="text-2xl font-bold">29/04</Text>
-        </View>
-        <View className="flex-row items-center space-x-2">
-            <Text>30/04</Text>
-            <Icon as= {ChevronRight}/>
-        </View>
+        <TouchableOpacity testID="button-prev-day" onPress={prevDay} className="flex-row items-center space-x-2" >
+            <Icon as={ChevronLeft} />
+            <Text>{dias[index - 1] || ""}</Text>
+        </TouchableOpacity>
+        <Text testID="navigation-current-day" className="text-2xl font-bold">{dias[index]}</Text>
+        <TouchableOpacity testID="button-next-day" onPress={nextDay} className="flex-row items-center space-x-2">
+            <Text>{dias[index + 1] || ""}</Text>
+            <Icon as={ChevronRight} />
+        </TouchableOpacity>
     </View>
 );
 };

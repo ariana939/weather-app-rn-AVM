@@ -1,10 +1,14 @@
 import { View } from "react-native";
 import { Text } from "@/components/ui/text";
 
-const Ciudad = () => {
+type CiudadProps = {
+  ciudad: string;
+};
+
+const Ciudad = ({ ciudad }: CiudadProps) => {
   return (
-    <View className="items-center mt-10">
-      <Text className="text-3xl">Buenos Aires</Text>
+    <View testID="ciudad" className="items-center mt-10">
+      <Text className="text-3xl">{ciudad}</Text>
     </View>
   );
 };

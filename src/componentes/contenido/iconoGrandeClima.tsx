@@ -2,9 +2,13 @@ import { View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Sun } from "lucide-react-native";
 
-const IconoGrandeClima = () => {
+type IconoProps = {
+  condicion?: "sunny" | "cloudy" | "rain";
+};
+
+const IconoGrandeClima = ({ condicion = "sunny" }: IconoProps) => {
   return (
-    <View className="items-center my-10">
+    <View testID={`icon-weather-${condicion}`} className="items-center my-10">
       <Icon as={Sun} size={200} />
     </View>
   );
