@@ -1,6 +1,6 @@
 import '@/global.css';
 
-import ProveedorPantallaNegroBlanco from '@/src/pantalla_negro_blanco'; 
+import ProveedorPantallaNegroBlanco from '@/src/pantalla'; 
 import StackPrincipal from '@/src/stack';
 import { PortalHost } from '@rn-primitives/portal';
 export { FeedbackDeErrorPorDefecto as ErrorBoundary } from '@/src/feedbacks';
