@@ -1,9 +1,9 @@
 import '@/global.css';
 
 import ProveedorPantallaNegroBlanco from '@/src/pantalla'; 
-import StackPrincipal from '@/src/stack';
+import StackPrincipal from '@/src/componentes/controlador/stack';
 import { PortalHost } from '@rn-primitives/portal';
-export { FeedbackDeErrorPorDefecto as ErrorBoundary } from '@/src/feedbacks';
+export { FeedbackDeErrorPorDefecto as ErrorBoundary } from '@/src/componentes/contenido/feedbacks';
 
 
 export default function RootLayout() {

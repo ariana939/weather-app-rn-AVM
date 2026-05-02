@@ -4,31 +4,32 @@ import { Text } from "@/components/ui/text";
 import { ChevronLeft, ChevronRight } from "lucide-react-native";
 import { View, TouchableOpacity } from "react-native"
 
-const dias = ["28/04", "29/04", "30/04"];
-
-const NavEntreDias = () => {
-  const [index, setIndex] = useState(1);
-
-  const prevDay = () => {
-    if (index > 0) setIndex(index - 1);
-  };
-
-  const nextDay = () => {
-    if (index < dias.length - 1) setIndex(index + 1);
-  };
+const NavEntreDias = ({ hoy, ayer, maniana }: { hoy: Date; ayer: Date; maniana: Date }) => {
+  const dias = [ayer, hoy, maniana];
+  const [indice, setIndice] = useState(1);
   return (
     <View className="flex-row justify-between items-center px-1 py-1">
-        <TouchableOpacity testID="button-prev-day" onPress={prevDay} className="flex-row items-center space-x-2 opacity-60" >
+        <TouchableOpacity testID="button-prev-day" className="flex-row items-center space-x-2 opacity-60" onPress={() => setIndice(indice - 1)}
+        disabled={indice === 0}>
             <Icon as={ChevronLeft} />
-            <Text>{dias[index - 1] || ""}</Text>
+             {indice > 0 && <Text>{formatearFecha(dias[indice - 1])}</Text>}
         </TouchableOpacity>
-        <Text testID="navigation-current-day" className="text-2xl opacity-100">{dias[index]}</Text>
-        <TouchableOpacity testID="button-next-day" onPress={nextDay} className="flex-row items-center space-x-2 opacity-60">
-            <Text>{dias[index + 1] || ""}</Text>
+        <Text testID="navigation-current-day" className="text-2xl opacity-100"> {formatearFecha(dias[indice])}</Text>
+        <TouchableOpacity testID="button-next-day" className="flex-row items-center space-x-2 opacity-60"  onPress={() => setIndice(indice + 1)}
+        disabled={indice === 2}>
+            {indice < 2 && <Text>{formatearFecha(dias[indice + 1])}</Text>}
             <Icon as={ChevronRight} />
         </TouchableOpacity>
     </View>
 );
 };
 
-export default NavEntreDias
+const formatearFecha = (fecha: Date) => {
+  const fecha_con_formato = fecha.toLocaleDateString('es-AR', {
+    year: 'numeric',
+    day: '2-digit',
+    month: '2-digit',
+  });
+  return fecha_con_formato.replace(`/${fecha.getFullYear()}`, '');
+};
+export default NavEntreDias;

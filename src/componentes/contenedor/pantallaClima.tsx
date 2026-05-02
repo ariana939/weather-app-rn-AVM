@@ -8,14 +8,16 @@ import TemperaturaPrincipal from "../contenido/temperaturaPrincipal";
 import TemperaturasMinMax from "../contenido/temperaturasMinimasMaximas";
 import Metrica from "../contenido/metricas";
 import { useWeather } from "@/src/hooks/hooks";
+import { usarFechas } from "@/src/hooks/dias";
 
 const PantallaClima = () => {
 
+  const { fechas } = usarFechas()
   const {ciudad, temp, min, max, condicion, metricas} = useWeather();
 
   return (
     <View testID="screen-weather" className="flex-1 justify-between py-10">
-      <NavEntreDias />
+      <NavEntreDias {...fechas()} />
       <Ciudad ciudad={ciudad} />
       <IconoGrandeClima condicion={condicion} />
       <Metrica {...metricas}/>
