@@ -3,6 +3,7 @@ import '@/global.css';
 import ProveedorPantallaNegroBlanco from '@/src/pantalla'; 
 import StackPrincipal from '@/src/componentes/controlador/stack';
 import { PortalHost } from '@rn-primitives/portal';
+import ProveedorDeDatosClimatico from '@/src/componentes/contenedor/proveedorDeClima';
 export { FeedbackDeErrorPorDefecto as ErrorBoundary } from '@/src/componentes/contenido/feedbacks';
 
 
@@ -10,8 +11,10 @@ export default function RootLayout() {
 
   return (
     <ProveedorPantallaNegroBlanco>
-        <StackPrincipal />
-        <PortalHost />
+        <ProveedorDeDatosClimatico>
+          <StackPrincipal />
+          <PortalHost />
+        </ProveedorDeDatosClimatico>
     </ProveedorPantallaNegroBlanco>
     
   );
