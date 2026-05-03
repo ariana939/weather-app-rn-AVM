@@ -15,7 +15,7 @@ export const usarPronosticoClimatico = ({
     queryKey: [fecha.getDate(), fecha.getHours(), latitud.toPrecision(2), longitud.toPrecision(2)],
     queryFn: async () => {
       const resultado = await fetch(
-        `http://api.weatherapi.com/v1/current.json?key=${clave_de_api}&q=${latitud},${longitud}`
+        `http://api.weatherapi.com/v1/forecast.json?key=${clave_de_api}&q=${latitud},${longitud}&days=3`
       );
       const data = await resultado.json();
       return data;
@@ -32,6 +32,8 @@ export const usarPronosticoClimatico = ({
     presionEnHectopascales: () => (isFetched ? data.current.pressure_mb : 0),
     velocidadDelVientoEnKilometrosPorHora: () => (isFetched ? data.current.wind_kph : 0),
     temperaturaEnGradosCelsius: () => (isFetched ? data.current.temp_c : 0),
+    temperaturaMinima: () =>  isFetched ? data.forecast.forecastday[0].day.mintemp_c : 0,
+    temperaturaMaxima: () =>isFetched ? data.forecast.forecastday[0].day.maxtemp_c : 0,
     descripcionDelProblema: () => (isError ? (error as Error).message : ''),
     pronostico: () =>
       isFetched
@@ -41,6 +43,8 @@ export const usarPronosticoClimatico = ({
             presion_en_hectopascales: data.current.pressure_mb,
             velocidad_del_viento_en_kilometros_por_hora: data.current.wind_kph,
             temperatura_en_grados_celsius: data.current.temp_c,
+            temperatura_minima: data.forecast.forecastday[0].day.mintemp_c,
+            temperatura_maxima: data.forecast.forecastday[0].day.maxtemp_c,
           }
         : null,
   };

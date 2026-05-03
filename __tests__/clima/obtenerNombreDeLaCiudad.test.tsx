@@ -1,4 +1,4 @@
-import usarPronosticoClimatico from '@/src/hooks/pronosticoClimatico';
+import usarPronosticoClimatico from '@/src/hooks/pronosticoClimaticoAPI';
 import ProveedorDeDatosClimatico from '@/src/componentes/contenedor/proveedorDeClima';
 import { renderHook, waitFor } from '@testing-library/react-native';
 
