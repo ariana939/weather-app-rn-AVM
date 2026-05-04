@@ -7,7 +7,12 @@ describe('Yo como usuario, deseo navegar entre los dias para conocer prediccione
     const hoy = new Date('may 02, 2026');
     const ayer = new Date('may 01, 2026');
     const maniana = new Date('may 03, 2026');
-    const screen = render(<NavEntreDias hoy={hoy} maniana={maniana} ayer={ayer} />);
+    const screen = render(<NavEntreDias 
+      hoy={hoy} 
+      maniana={maniana} 
+      ayer={ayer} 
+      indiceDia={1}
+      setIndiceDia={() => {}}/>);
 
     expect(screen.getByText('01/05')).toBeOnTheScreen();
     expect(screen.getByText('02/05')).toBeOnTheScreen();

@@ -18,9 +18,47 @@ jest.mock('expo-location', () => {
   };
 });
 
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () =>
+      Promise.resolve({
+        location: {
+          name: 'Buenos Aires',
+        },
+        current: {
+          pressure_mb: 1027.0,
+        },
+        forecast: {                         
+          forecastday: [
+            {
+              day: {
+                condition: { text: 'Clear', code: 1000 },
+                avghumidity: 93,
+                maxwind_kph: 6.1,
+                avgtemp_c: 9.2,
+                mintemp_c: 7.0,
+                maxtemp_c: 12.0,
+              },
+              hour: [],
+            },
+            {
+              day: {
+                condition: { text: 'Clear', code: 1000 },
+                avghumidity: 93,
+                maxwind_kph: 6.1,
+                avgtemp_c: 9.2,
+                mintemp_c: 7.0,
+                maxtemp_c: 12.0,
+              },
+              hour: [],
+            },
+          ],
+        },
+      }),
+  })
+) as jest.Mock;
+
 describe('Yo como usuario quiero visualizar los datos del clima de la fecha para saber como vestirme ', () => {
-  beforeAll(() => jest.useFakeTimers());
-  afterAll(() => jest.useRealTimers());
   test('Es posible obtener las coordendas geograficas de mi localizacion', async () => {
     const resultado = renderHook(() => usarLocalizacion());
 
