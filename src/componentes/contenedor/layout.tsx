@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+/*import React, { PropsWithChildren } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const LayoutParaPantallaDelClima = ({children}: PropsWithChildren) => {
@@ -9,4 +9,4 @@ const LayoutParaPantallaDelClima = ({children}: PropsWithChildren) => {
   )
 }
 
-export default LayoutParaPantallaDelClima
+export default LayoutParaPantallaDelClima*/

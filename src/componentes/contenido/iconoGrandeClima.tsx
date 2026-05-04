@@ -1,15 +1,20 @@
 import { View } from "react-native";
 import { Icon } from "@/components/ui/icon";
 import { Circle } from "lucide-react-native";
+import { getSimpleWeather } from "@/src/utils/obtenerCodigoClima";
+import { getWeatherIcon } from "@/src/utils/obtenerIconoClima";
 
-type IconoProps = {
-  condicion?: "sunny" | "cloudy" | "rain";
+type Props = {
+  code: number;
 };
 
-const IconoGrandeClima = ({ condicion = "sunny" }: IconoProps) => {
+const IconoGrandeClima = ({ code }: Props) => {
+  const weatherType = getSimpleWeather(code);
+  const WeatherIcon = getWeatherIcon(weatherType);
+
   return (
-    <View testID={`icon-weather-${condicion}`} className="items-center my-10">
-      <Icon as={Circle} size={250} />
+    <View testID={`icon-weather-${weatherType}`} className="items-center my-10">
+      <Icon as={WeatherIcon} size={200} />
     </View>
   );
 };

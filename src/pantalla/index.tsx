@@ -1,4 +1,4 @@
-import { NAV_THEME } from '@/lib/theme';
+/*import { NAV_THEME } from '@/lib/theme';
 import { ThemeProvider } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'nativewind';
@@ -14,3 +14,6 @@ export default function ProveedorPantallaNegroBlanco({children}: PropsWithChildr
     </ThemeProvider>
   );
 }
+
+
+*/

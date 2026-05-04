@@ -5,15 +5,28 @@ export const usarPronosticoClimatico = ({
   latitud,
   longitud,
   clave_de_api,
+  indiceDia,
 }: {
   fecha: Date;
   latitud: number;
   longitud: number;
   clave_de_api: string;
+  indiceDia: number;
 }) => {
+
+  const esAyer = indiceDia === 0;
+  const fechaFormateada = fecha.toISOString().split('T')[0];
+
   const { isPending, isFetched, isError, error, data } = useQuery({
-    queryKey: [fecha.getDate(), fecha.getHours(), latitud.toPrecision(2), longitud.toPrecision(2)],
+    queryKey: [indiceDia, fecha.getDate(), fecha.getHours(), latitud.toPrecision(2), longitud.toPrecision(2)],
     queryFn: async () => {
+      if (esAyer) { 
+        const res = await fetch( 
+          `http://api.weatherapi.com/v1/history.json?key=${clave_de_api}&q=${latitud},${longitud}&dt=${fechaFormateada}`
+         );
+         return await res.json(); 
+      }
+
       const resultado = await fetch(
         `http://api.weatherapi.com/v1/forecast.json?key=${clave_de_api}&q=${latitud},${longitud}&days=3`
       );
@@ -22,29 +35,38 @@ export const usarPronosticoClimatico = ({
     },
   });
 
+  const diaSeleccionado = isFetched 
+  ? (indiceDia === 0
+      ? data.forecast.forecastday[0]
+      : data.forecast.forecastday[indiceDia - 1]
+    )
+    : null;
+
   return {
     estaPendiente: () => isPending,
     huboUnProblema: () => isError,
     consultaExitosa: () => isFetched,
     ciudad: () => (isFetched ? data.location.name : ''),
-    condicionClimatica: () => (isFetched ? data.current.condition.text : ''),
-    humedadEnPorcentaje: () => (isFetched ? data.current.humidity : 0),
-    presionEnHectopascales: () => (isFetched ? data.current.pressure_mb : 0),
-    velocidadDelVientoEnKilometrosPorHora: () => (isFetched ? data.current.wind_kph : 0),
-    temperaturaEnGradosCelsius: () => (isFetched ? data.current.temp_c : 0),
-    temperaturaMinima: () =>  isFetched ? data.forecast.forecastday[0].day.mintemp_c : 0,
-    temperaturaMaxima: () =>isFetched ? data.forecast.forecastday[0].day.maxtemp_c : 0,
+    condicionClimatica: () => diaSeleccionado ? diaSeleccionado.day.condition.text : '',
+    codigoClima: () => diaSeleccionado ? diaSeleccionado.day.condition.code : 0,
+    humedadEnPorcentaje: () => diaSeleccionado ? diaSeleccionado.day.avghumidity : 0,
+    presionEnHectopascales: () => (data?.current?.pressure_mb ?? 0) ,
+    velocidadDelVientoEnKilometrosPorHora: () => diaSeleccionado ? diaSeleccionado.day.maxwind_kph : 0,
+    temperaturaEnGradosCelsius: () => diaSeleccionado ? diaSeleccionado.day.avgtemp_c : 0,
+    temperaturaMinima: () =>  diaSeleccionado ? diaSeleccionado.day.mintemp_c : 0,
+    temperaturaMaxima: () => diaSeleccionado ? diaSeleccionado.day.maxtemp_c : 0,
     descripcionDelProblema: () => (isError ? (error as Error).message : ''),
     pronostico: () =>
-      isFetched
+      diaSeleccionado
         ? {
-            condicion_climatica: data.current.condition.text,
-            humedad_en_porcentaje: data.current.humidity,
-            presion_en_hectopascales: data.current.pressure_mb,
-            velocidad_del_viento_en_kilometros_por_hora: data.current.wind_kph,
-            temperatura_en_grados_celsius: data.current.temp_c,
-            temperatura_minima: data.forecast.forecastday[0].day.mintemp_c,
-            temperatura_maxima: data.forecast.forecastday[0].day.maxtemp_c,
+            condicion_climatica: diaSeleccionado.day.condition.text,
+            codigo_clima: diaSeleccionado.day.condition.code,
+            humedad_en_porcentaje: diaSeleccionado.day.avghumidity,
+            presion_en_hectopascales: data?.current?.pressure_mb,
+            velocidad_del_viento_en_kilometros_por_hora: diaSeleccionado.day.maxwind_kph,
+            temperatura_en_grados_celsius: diaSeleccionado.day.avgtemp_c,
+            temperatura_minima: diaSeleccionado.day.mintemp_c,
+            temperatura_maxima: diaSeleccionado.day.maxtemp_c,
           }
         : null,
   };
