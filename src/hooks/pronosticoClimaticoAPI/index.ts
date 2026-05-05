@@ -1,16 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 
+const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 export const usarPronosticoClimatico = ({
   fecha,
   latitud,
   longitud,
-  clave_de_api,
   indiceDia,
 }: {
   fecha: Date;
   latitud: number;
   longitud: number;
-  clave_de_api: string;
   indiceDia: number;
 }) => {
   const esAyer = indiceDia === 0;
@@ -21,12 +20,12 @@ export const usarPronosticoClimatico = ({
     queryFn: async () => {
       if (esAyer) {
         const res = await fetch(
-          `https://api.weatherapi.com/v1/history.json?key=${clave_de_api}&q=${latitud},${longitud}&dt=${fechaFormateada}`
+          `https://api.weatherapi.com/v1/history.json?key=${API_KEY}&q=${latitud},${longitud}&dt=${fechaFormateada}`
         );
         return await res.json();
       }
       const resultado = await fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=${clave_de_api}&q=${latitud},${longitud}&days=2`
+        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${latitud},${longitud}&days=2`
       );
       return await resultado.json();
     },
