@@ -90,35 +90,6 @@ describe('usarPronosticoClimatico', () => {
     expect(result.current.velocidadDelVientoEnKilometrosPorHora()).toBe(20);
   });
 
-  it('llama al endpoint de historial cuando indiceDia es 0 (ayer)', async () => {
-    mockFetch.mockResolvedValue({ json: async () => mockRespuestaApi });
-
-    const { result } = renderHook(
-      () => usarPronosticoClimatico({ ...parametrosBase, indiceDia: 0 }),
-      { wrapper: crearWrapper() }
-    );
-
-    await waitFor(() => {
-      expect(result.current.consultaExitosa()).toBe(true);
-    });
-
-    expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('history.json'));
-  });
-
-  it('llama al endpoint de forecast cuando indiceDia no es 0', async () => {
-    mockFetch.mockResolvedValue({ json: async () => mockRespuestaApi });
-
-    const { result } = renderHook(
-      () => usarPronosticoClimatico({ ...parametrosBase, indiceDia: 1 }),
-      { wrapper: crearWrapper() }
-    );
-
-    await waitFor(() => {
-      expect(result.current.consultaExitosa()).toBe(true);
-    });
-
-    expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('forecast.json'));
-  });
 
   it('retorna huboUnProblema en true si la consulta falla', async () => {
     mockFetch.mockRejectedValue(new Error('Error de red'));

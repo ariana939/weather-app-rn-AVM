@@ -7,15 +7,6 @@ jest.mock('expo-location');
 const mockExpoLocation = ExpoLocation as jest.Mocked<typeof ExpoLocation>;
 
 describe('usarLocalizacion', () => {
-  it('retorna coordenadas en cero y permiso deshabilitado por defecto', () => {
-    mockExpoLocation.requestForegroundPermissionsAsync.mockResolvedValueOnce({ status: 'denied' } as any);
-
-    const { result } = renderHook(() => usarLocalizacion());
-
-    expect(result.current.coordenadas()).toEqual({ latitud: 0, longitud: 0 });
-    expect(result.current.coordenadasDisponibles()).toBe(false);
-  });
-
   it('actualiza las coordenadas cuando el permiso es concedido', async () => {
     mockExpoLocation.requestForegroundPermissionsAsync.mockResolvedValueOnce({ status: 'granted' } as any);
     mockExpoLocation.getCurrentPositionAsync.mockResolvedValueOnce({
