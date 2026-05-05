@@ -12,6 +12,9 @@
       "distribution": "internal"
     },
     "production": {
+      "env": {
+        "EXPO_PUBLIC_API_KEY": "5a69607412b14dbcb4f185737260105"
+      },
       "autoIncrement": true
     }
   },

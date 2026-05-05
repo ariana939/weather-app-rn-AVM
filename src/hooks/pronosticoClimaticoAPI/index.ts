@@ -49,7 +49,7 @@ export const usarPronosticoClimatico = ({
     consultaExitosa: () => isSuccess,
     ciudad: () => {
       if (!isSuccess) return "";
-      return data.location.name;
+      return data?.location?.name ?? "";
     },
     condicionClimatica: () => diaSeleccionado ? diaSeleccionado.day.condition.text : '',
     codigoClima: () => diaSeleccionado ? diaSeleccionado.day.condition.code : 0,
