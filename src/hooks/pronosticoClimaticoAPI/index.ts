@@ -21,12 +21,12 @@ export const usarPronosticoClimatico = ({
     queryFn: async () => {
       if (esAyer) {
         const res = await fetch(
-          `http://api.weatherapi.com/v1/history.json?key=${clave_de_api}&q=${latitud},${longitud}&dt=${fechaFormateada}`
+          `https://api.weatherapi.com/v1/history.json?key=${clave_de_api}&q=${latitud},${longitud}&dt=${fechaFormateada}`
         );
         return await res.json();
       }
       const resultado = await fetch(
-        `http://api.weatherapi.com/v1/forecast.json?key=${clave_de_api}&q=${latitud},${longitud}&days=2`
+        `https://api.weatherapi.com/v1/forecast.json?key=${clave_de_api}&q=${latitud},${longitud}&days=2`
       );
       return await resultado.json();
     },
@@ -53,9 +53,11 @@ export const usarPronosticoClimatico = ({
     presionEnHectopascales: () => esAyer
       ? (() => {
           const horas = diaSeleccionado?.hour ?? [];
-          return horas.length > 0
-            ? horas.reduce((acc: number, h: { pressure_mb: number }) => acc + h.pressure_mb, 0) / horas.length
-            : 0;
+          const promedio =
+            horas.length > 0
+              ? horas.reduce((acc: number, h: { pressure_mb: number }) => acc + h.pressure_mb, 0) / horas.length
+              : 0;
+           return Math.round(promedio);
         })()
       : data?.current?.pressure_mb ?? 0,
 
